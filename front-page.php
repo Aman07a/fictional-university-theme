@@ -16,9 +16,21 @@
             <h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
 
             <?php
+            $today = date("Ymd");
             $homepageEvents = new WP_Query(array(
-                "posts_per_page" => 2,
-                "post_type" => "event"
+                "posts_per_page" => -1,
+                "post_type" => "event",
+                "meta_key" => "event_date",
+                "orderby" => "meta_value_num",
+                "order" => "ASC",
+                "meta_query" => array(
+                    array(
+                        "key" => "event_date",
+                        "compare" => ">=",
+                        "value" => $today,
+                        "type" => "numeric"
+                    )
+                )
             ));
 
             while ($homepageEvents->have_posts()) {
@@ -31,9 +43,7 @@
                             echo $eventDate->format("M")
                             ?>
                         </span>
-                        <span class="event-summary__day">
-                            <?php echo $eventDate->format("d") ?>
-                        </span>
+                        <span class="event-summary__day"><?php echo $eventDate->format("d") ?></span>
                     </a>
                     <div class="event-summary__content">
                         <h5 class="event-summary__title headline headline--tiny">
@@ -93,7 +103,9 @@
             wp_reset_postdata();
             ?>
 
-            <p class="t-center no-margin"><a href="<?php echo site_url("/blog"); ?>" class="btn btn--yellow">View All Blog Posts</a></p>
+            <p class="t-center no-margin">
+                <a href="<?php echo site_url("/blog"); ?>" class="btn btn--yellow">View All Blog Posts</a>
+            </p>
         </div>
     </div>
 </div>
