@@ -18,7 +18,7 @@
             <?php
             $today = date("Ymd");
             $homepageEvents = new WP_Query(array(
-                "posts_per_page" => -1,
+                "posts_per_page" => 2,
                 "post_type" => "event",
                 "meta_key" => "event_date",
                 "orderby" => "meta_value_num",
@@ -85,7 +85,9 @@
                         <span class="event-summary__day"><?php the_time("d"); ?></span>
                     </a>
                     <div class="event-summary__content">
-                        <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
+                        <h5 class="event-summary__title headline headline--tiny">
+                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                        </h5>
                         <p>
                             <?php
                             if (has_excerpt()) {
