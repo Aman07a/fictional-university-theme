@@ -24,13 +24,15 @@ while (have_posts()) {
 
         <?php
         $testArray = get_pages(array(
-            'child_of' => get_the_ID()
+            "child_of" => get_the_ID()
         ));
 
         if ($theParent or $testArray) { ?>
             <div class="page-links">
                 <h2 class="page-links__title">
-                    <a href="<?php echo get_permalink($theParent); ?>"><?php echo get_the_title($theParent); ?></a>
+                    <a href="<?php echo get_permalink($theParent); ?>">
+                        <?php echo get_the_title($theParent); ?>
+                    </a>
                 </h2>
                 <ul class="min-list">
                     <?php
@@ -41,9 +43,9 @@ while (have_posts()) {
                     }
 
                     wp_list_pages(array(
-                        'title_li' => NULL,
-                        'child_of' => $findChildrenOf,
-                        'sort_column' => 'menu_order'
+                        "title_li" => NULL,
+                        "child_of" => $findChildrenOf,
+                        "sort_column" => "menu_order"
                     ));
                     ?>
                 </ul>
