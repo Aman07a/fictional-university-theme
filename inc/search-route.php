@@ -49,7 +49,7 @@ function universitySearchResults($data)
             array_push($results["programs"], array(
                 "title" => get_the_title(),
                 "permalink" => get_the_permalink(),
-                "id" => get_the_ID()
+                "id" => get_the_id()
             ));
         }
 
@@ -81,22 +81,19 @@ function universitySearchResults($data)
     }
 
     if ($results["programs"]) {
-        $programMetaQuery = array("relation" => "OR");
+        $programsMetaQuery = array("relation" => "OR");
 
         foreach ($results["programs"] as $item) {
-            array_push(
-                $programMetaQuery,
-                array(
-                    "key" => "related_programs",
-                    "compare" => "LIKE",
-                    "value" => '""' . $item["id"] . '""'
-                )
-            );
+            array_push($programsMetaQuery, array(
+                "key" => "related_programs",
+                "compare" => "LIKE",
+                "value" => '"' . $item["id"] . '"'
+            ));
         }
 
         $programRelationshipQuery = new WP_Query(array(
             "post_type" => "professor",
-            "meta_query" => $programMetaQuery
+            "meta_query" => $programsMetaQuery
         ));
 
         while ($programRelationshipQuery->have_posts()) {
